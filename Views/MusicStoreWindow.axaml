@@ -1,0 +1,69 @@
+<Window 
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:mv="clr-namespace:MusicStoreApp.ViewModels"
+  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+  x:Class="MusicStoreApp.MusicStoreWindow"
+  x:DataType="mv:MusicStoreWindowViewModel"
+  Title="MusicStoreWindow"
+  Width="1000" Height="550"
+  Background="Transparent"
+  TransparencyLevelHint="AcrylicBlur"
+  WindowStartupLocation="CenterOwner"
+  ExtendClientAreaToDecorationsHint="True">
+  <Panel>
+    <ExperimentalAcrylicBorder IsHitTestVisible="False">
+      <ExperimentalAcrylicBorder.Material>
+        <ExperimentalAcrylicMaterial
+          BackgroundSource="Digger"
+          TintColor="Black"
+          TintOpacity="1"
+          MaterialOpacity="0.65" />
+      </ExperimentalAcrylicBorder.Material>
+    </ExperimentalAcrylicBorder>
+    <Grid Margin="40" RowDefinitions="Auto * Auto">
+      <StackPanel Grid.Row="0">
+        <TextBox 
+          Text="{Binding SearchText}" 
+          Watermark="Search for Albums...." 
+        />
+        <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" />
+      </StackPanel>
+      <ListBox
+        Grid.Row="1"
+        ItemsSource="{Binding SearchResults}" 
+        SelectedItem="{Binding SelectedAlbum}" 
+        Background="Transparent"
+        Margin="0 20">
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel />
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Spacing="5" Width="200">
+              <Border CornerRadius="10" ClipToBounds="True">
+                <Panel Background="#7FFF22DD">
+                  <Image Width="200" Stretch="Uniform" Source="{Binding CoverUrl}" />
+                  <Panel Height="200">
+                    <PathIcon Height="75" Width="75" Data="{StaticResource music_regular}" />
+                  </Panel>
+                </Panel>
+              </Border>
+              <TextBlock HorizontalAlignment="Center" Text="{Binding Title}"/>
+              <TextBlock HorizontalAlignment="Center" Text="{Binding Artist}"/>
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <Button 
+        Content="Buy Album" 
+        Grid.Row="2"
+        HorizontalAlignment="Center"
+      />
+    </Grid>
+  </Panel>
+</Window>
